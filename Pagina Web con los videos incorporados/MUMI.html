@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUMI — Museo de la Minería y la Industria de Asturias</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --negro: #1a1612;
+    --carbon: #2c2520;
+    --antracita: #3d3530;
+    --acero: #5c6370;
+    --oxido: #8b4513;
+    --oxido-claro: #c0622a;
+    --dorado: #c8960a;
+    --dorado-claro: #e8b020;
+    --crema: #f5efe6;
+    --blanco-hueso: #faf7f2;
+    --gris-claro: #e8e2d9;
+    --texto-oscuro: #1a1612;
+    --texto-medio: #4a4035;
+    --texto-suave: #7a6f60;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--blanco-hueso);
+    color: var(--texto-oscuro);
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--negro);
+    border-bottom: 3px solid var(--dorado);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .nav-logo-siglas {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--dorado-claro);
+    letter-spacing: 3px;
+  }
+
+  .nav-logo-sep {
+    width: 1px;
+    height: 32px;
+    background: var(--antracita);
+  }
+
+  .nav-logo-texto {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0 1.1rem;
+    height: 64px;
+    line-height: 64px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--dorado-claro);
+    background: rgba(200,150,10,0.08);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: var(--negro);
+    min-height: 600px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.012) 3px,
+        rgba(255,255,255,0.012) 4px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.012) 40px,
+        rgba(255,255,255,0.012) 41px
+      ),
+      radial-gradient(ellipse 80% 60% at 60% 40%, #3d2a18 0%, #1a1612 60%, #0d0c0a 100%);
+  }
+
+  /* Castillete SVG decorativo */
+  .hero-castillete {
+    position: absolute;
+    right: 6%;
+    bottom: 0;
+    opacity: 0.18;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    padding: 4rem 4rem 5rem;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    border: 1px solid var(--dorado);
+    padding: 4px 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 400;
+    color: var(--crema);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--dorado-claro);
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: #aaa09a;
+    max-width: 500px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primario {
+    display: inline-block;
+    background: var(--dorado);
+    color: var(--negro);
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 14px 28px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-primario:hover { background: var(--dorado-claro); }
+
+  .btn-secundario {
+    display: inline-block;
+    border: 1px solid #666;
+    color: #ccc;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secundario:hover { border-color: var(--dorado); color: var(--dorado); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    background: rgba(0,0,0,0.6);
+    border-top: 2px solid var(--dorado);
+  }
+
+  .hero-stat {
+    padding: 1.2rem 2rem;
+    border-right: 1px solid #333;
+    text-align: center;
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dorado-claro);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* ── FRANJA ── */
+  .franja {
+    background: var(--carbon);
+    border-top: 2px solid var(--oxido);
+    border-bottom: 2px solid var(--oxido);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    overflow: hidden;
+  }
+
+  .franja-label {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--oxido-claro);
+    white-space: nowrap;
+  }
+
+  .franja-items {
+    display: flex;
+    gap: 3rem;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #888;
+  }
+
+  /* ── SECCIONES genéricas ── */
+  section { padding: 5rem 2rem; }
+
+  .seccion-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 4rem;
+  }
+
+  .seccion-tag {
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 1rem;
+  }
+
+  .seccion-titulo {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--texto-oscuro);
+    margin-bottom: 1rem;
+  }
+
+  .seccion-desc {
+    font-size: 1rem;
+    color: var(--texto-suave);
+    line-height: 1.8;
+  }
+
+  .seccion-linea {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .seccion-linea::before,
+  .seccion-linea::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--dorado);
+  }
+
+  /* ── VIDEOS IA ── */
+  #videos {
+    background: var(--negro);
+    color: var(--crema);
+  }
+
+  #videos .seccion-titulo { color: var(--crema); }
+  #videos .seccion-desc { color: #9a938a; }
+  #videos .seccion-linea::before,
+  #videos .seccion-linea::after { background: var(--dorado); }
+
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .video-card {
+    position: relative;
+    background: var(--carbon);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .video-card:hover { transform: scale(1.01); z-index: 2; }
+
+  .video-card:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .video-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--antracita);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-card:first-child .video-thumb {
+    aspect-ratio: 21/9;
+  }
+
+  /* Fondos simulados distintos para cada vídeo */
+  .vt-1 {
+    background: radial-gradient(ellipse at 40% 60%, #2a1a0e 0%, #0d0c0a 100%);
+  }
+  .vt-2 {
+    background: radial-gradient(ellipse at 60% 40%, #0e1a2a 0%, #0a0c0d 100%);
+  }
+  .vt-3 {
+    background: radial-gradient(ellipse at 50% 50%, #1a1208 0%, #0d0c0a 100%);
+  }
+  .vt-4 {
+    background: radial-gradient(ellipse at 30% 60%, #1a0e0e 0%, #0d0c0a 100%);
+  }
+
+  /* Líneas de escaneo */
+  .video-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.15) 3px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+  }
+
+  .video-play-btn {
+    width: 64px;
+    height: 64px;
+    border: 2px solid rgba(200,150,10,0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .video-card:hover .video-play-btn {
+    background: var(--dorado);
+    border-color: var(--dorado);
+  }
+
+  .video-play-btn svg { margin-left: 4px; }
+
+  .video-ia-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--dorado);
+    color: var(--negro);
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    z-index: 2;
+  }
+
+  .video-duracion {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.75);
+    color: #ddd;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    padding: 2px 6px;
+    z-index: 2;
+  }
+
+  .video-info {
+    padding: 1.2rem 1.4rem;
+    border-top: 2px solid var(--dorado);
+  }
+
+  .video-categoria {
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 6px;
+  }
+
+  .video-titulo {
+    font-size: 1.05rem;
+    color: var(--crema);
+    font-weight: 400;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .video-desc {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* ── EXPOSICIONES ── */
+  #exposiciones {
+    background: var(--crema);
+  }
+
+  .expo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--gris-claro);
+  }
+
+  .expo-item {
+    background: var(--blanco-hueso);
+    padding: 2rem;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .expo-item:hover { border-bottom-color: var(--dorado); }
+
+  .expo-num {
+    font-family: Arial, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gris-claro);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .expo-titulo {
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    color: var(--texto-oscuro);
+  }
+
+  .expo-desc {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: var(--texto-suave);
+    line-height: 1.6;
+  }
+
+  .expo-enlace {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .expo-enlace:hover { border-bottom-color: var(--dorado); }
+
+  /* ── MINA IMAGEN ── */
+  #mina {
+    background: var(--negro);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mina-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (max-width: 700px) { .mina-inner { grid-template-columns: 1fr; } }
+
+  .mina-texto .seccion-titulo { color: var(--crema); text-align: left; }
+  .mina-texto .seccion-desc { color: #9a938a; }
+  .mina-texto .seccion-tag { text-align: left; }
+
+  .mina-features {
+    list-style: none;
+    margin: 2rem 0;
+  }
+
+  .mina-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #2c2520;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .mina-features li::before {
+    content: '▸';
+    color: var(--dorado);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Ilustración mina */
+  .mina-visual {
+    position: relative;
+  }
+
+  /* ── VISITA ── */
+  #visita {
+    background: var(--antracita);
+    color: var(--crema);
+  }
+
+  .visita-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #333;
+  }
+
+  .visita-card {
+    background: var(--carbon);
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .visita-icono {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .visita-titulo {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 0.75rem;
+  }
+
+  .visita-valor {
+    font-size: 1rem;
+    color: var(--crema);
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--negro);
+    border-top: 3px solid var(--dorado);
+    padding: 3rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  @media (max-width: 700px) { .footer-inner { grid-template-columns: 1fr; } }
+
+  .footer-marca p {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #666;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  .footer-col-titulo {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.5rem; }
+
+  .footer-col ul a {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul a:hover { color: var(--dorado); }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    color: #555;
+  }
+
+  /* ── MODAL vídeo ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.activo {
+    display: flex;
+  }
+
+  .modal-box {
+    background: var(--carbon);
+    border: 1px solid #444;
+    border-top: 3px solid var(--dorado);
+    max-width: 800px;
+    width: 90%;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .modal-cerrar {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-cerrar:hover { color: var(--dorado); }
+
+  .modal-video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #111;
+    border: 2px dashed #444;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: #666;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    text-align: center;
+    padding: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+
+
+  .modal-video-placeholder span:first-child {
+    font-size: 2rem;
+    color: var(--dorado);
+  }
+
+  .modal-vid-titulo {
+    font-size: 1.15rem;
+    color: var(--crema);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-vid-desc {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #888;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-siglas">MUMI</span>
+    <div class="nav-logo-sep"></div>
+    <span class="nav-logo-texto">Museo de la Minería<br>y la Industria · Asturias</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#videos">Vídeos IA</a></li>
+    <li><a href="#exposiciones">Exposiciones</a></li>
+    <li><a href="#mina">Mina imagen</a></li>
+    <li><a href="#visita">Planifica tu visita</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Castillete decorativo SVG -->
+  <svg class="hero-castillete" width="320" height="580" viewBox="0 0 320 580" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="148" y="0" width="24" height="400" fill="#fff"/>
+    <rect x="130" y="370" width="60" height="210" fill="#fff"/>
+    <polygon points="160,0 80,200 240,200" fill="#fff"/>
+    <polygon points="160,0 100,180 220,180" fill="#aaa"/>
+    <rect x="60" y="195" width="200" height="8" fill="#fff"/>
+    <rect x="80" y="195" width="6" height="180" fill="#fff"/>
+    <rect x="234" y="195" width="6" height="180" fill="#fff"/>
+    <rect x="50" y="370" width="220" height="10" fill="#fff"/>
+    <rect x="110" y="380" width="100" height="200" fill="#ccc"/>
+    <rect x="125" y="420" width="70" height="160" fill="#aaa"/>
+    <circle cx="160" cy="210" r="22" fill="#fff" stroke="#888" stroke-width="4"/>
+    <circle cx="160" cy="210" r="10" fill="#888"/>
+    <rect x="154" y="195" width="12" height="30" fill="#888"/>
+    <rect x="70" y="370" width="20" height="100" fill="#bbb"/>
+    <rect x="230" y="370" width="20" height="100" fill="#bbb"/>
+    <rect x="50" y="465" width="220" height="8" fill="#fff"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="hero-tag">El Entrego · San Martín del Rey Aurelio · Asturias</span>
+    <h1>La memoria<br>del <em>carbón</em><br>y el acero</h1>
+    <p>El museo más visitado de Asturias. Dos siglos de historia minera e industrial, ahora también con recreaciones en vídeo generado por inteligencia artificial.</p>
+    <div class="hero-btns">
+      <a href="#visita" class="btn-primario">Planifica tu visita</a>
+      <a href="#videos" class="btn-secundario">Ver vídeos IA</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">60.000</span>
+      <span class="hero-stat-label">Visitantes / año</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">1994</span>
+      <span class="hero-stat-label">Año de apertura</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">850 m</span>
+      <span class="hero-stat-label">Galerías subterráneas</span>
+    </div>
+  </div>
+</section>
+
+<!-- FRANJA TICKER -->
+<div class="franja">
+  <span class="franja-label">Colecciones</span>
+  <div class="franja-items">
+    <span>Lámparas mineras</span>
+    <span>·</span>
+    <span>Locomotoras de vapor</span>
+    <span>·</span>
+    <span>Maquinaria de extracción</span>
+    <span>·</span>
+    <span>Minerales de Asturias</span>
+    <span>·</span>
+    <span>Sociología laboral</span>
+    <span>·</span>
+    <span>Arqueología industrial</span>
+    <span>·</span>
+    <span>Pozo San Vicente</span>
+    <span>·</span>
+    <span>Jaula de extracción original</span>
+  </div>
+</div>
+
+<!-- SECCIÓN VÍDEOS IA -->
+<section id="videos">
+  <div class="seccion-header">
+    <span class="seccion-tag">Nuevas tecnologías</span>
+    <div class="seccion-linea">
+      <h2 class="seccion-titulo">Vídeos generados<br>con inteligencia artificial</h2>
+    </div>
+    <p class="seccion-desc">Recreaciones audiovisuales de cómo trabajaban los mineros asturianos, producidas con IA generativa a partir de documentación histórica y testimonios orales.</p>
+  </div>
+
+  <div class="videos-grid">
+
+    <!-- Vídeo destacado -->
+    <div class="video-card" onclick="abrirModal('El descenso a la mina: una jornada completa', 'Recreación completa de una jornada laboral en el Pozo San Vicente a principios del siglo XX. Desde la llegada de los mineros hasta el ascenso al final del turno.','VideosIA/videoJornadaLaboral.mp4')">
+      <div class="video-thumb vt-1">
+        <div class="video-ia-badge">Generado con IA</div>
+        <img src="VideosIA/mina.jpg" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+        <div class="video-play-btn">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <polygon points="7,4 19,11 7,18" fill="#c8960a"/>
+          </svg>
+        </div>
+        <div class="video-duracion">8:42</div>
+        <!-- Decoración gráfica interior -->
+        <svg style="position:absolute;opacity:0.12;bottom:20px;left:40px;" width="180" height="120" viewBox="0 0 180 120">
+          <rect x="20" y="20" width="140" height="80" rx="4" stroke="#c8960a" stroke-width="1.5" fill="none"/>
+          <line x1="20" y1="60" x2="160" y2="60" stroke="#c8960a" stroke-width="1"/>
+          <circle cx="90" cy="60" r="20" stroke="#c8960a" stroke-width="1.5" fill="none"/>
+          <line x1="80" y1="45" x2="100" y2="75" stroke="#c8960a" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="video-info">
+        <div class="video-categoria">Documental · Vídeo destacado</div>
+        <h3 class="video-titulo">El descenso a la mina: una jornada completa</h3>
+        <p class="video-desc">Recreación de una jornada en el Pozo San Vicente a principios del siglo XX, generada con IA a partir de documentación histórica.</p>
+      </div>
+    </div>
+
+    <!-- Vídeo 2 -->
+    <div class="video-card" onclick="abrirModal('La jaula de extracción', 'El sistema de transporte vertical que conectaba los niveles inferiores con la superficie. Los mineros llamaban «la jaula» al ascensor de la mina.', 'VideosIA/videoJaulaDeExtraccion.mp4')">
+      <div class="video-thumb vt-2">
+        <div class="video-ia-badge">Generado con IA</div>
+        <img src="VideosIA/jaula.jpg" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+        <div class="video-play-btn">
+          <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+            <polygon points="7,4 19,11 7,18" fill="#c8960a"/>
+          </svg>
+        </div>
+        <div class="video-duracion">4:15</div>
+      </div>
+      <div class="video-info">
+        <div class="video-categoria">Maquinaria</div>
+        <h3 class="video-titulo">La jaula de extracción</h3>
+        <p class="video-desc">El sistema de transporte vertical que conectaba los niveles inferiores con la superficie.</p>
+      </div>
+    </div>
+
+    <!-- Vídeo 3 -->
+    <div class="video-card" onclick="abrirModal('Arranque y voladura del carbón', 'Demostración de las técnicas de extracción del carbón: desde el pico manual hasta el uso de explosivos a mediados del siglo XX.','VideosIA/videoVoladuraCarbon.mp4')">
+      <div class="video-thumb vt-3">
+        <div class="video-ia-badge">Generado con IA</div>
+        <img src="VideosIA/pico.jpg" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+        <div class="video-play-btn">
+          <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+            <polygon points="7,4 19,11 7,18" fill="#c8960a"/>
+          </svg>
+        </div>
+        <div class="video-duracion">5:30</div>
+      </div>
+      <div class="video-info">
+        <div class="video-categoria">Técnicas extractivas</div>
+        <h3 class="video-titulo">Arranque y voladura del carbón</h3>
+        <p class="video-desc">Evolución de las técnicas de extracción desde el pico manual hasta los explosivos industriales.</p>
+      </div>
+    </div>
+
+    <!-- Vídeo 4 -->
+    <div class="video-card" onclick="abrirModal('La enfermería y el aseo de la mina', 'Recreación de los espacios sociales de la mina: la casa-aseo, la enfermería y el economato. La vida más allá del tajo.','VideosIA/videoAseoyEnfermeria.mp4')">
+      <div class="video-thumb vt-4">
+        <div class="video-ia-badge">Generado con IA</div>
+        <img src="VideosIA/enfermeria.jpg" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+        <div class="video-play-btn">
+          <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+            <polygon points="7,4 19,11 7,18" fill="#c8960a"/>
+          </svg>
+        </div>
+        <div class="video-duracion">3:50</div>
+      </div>
+      <div class="video-info">
+        <div class="video-categoria">Vida minera</div>
+        <h3 class="video-titulo">La enfermería y el aseo de la mina</h3>
+        <p class="video-desc">Los espacios sociales del complejo minero: aseos, enfermería y economato.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPOSICIONES -->
+<section id="exposiciones">
+  <div class="seccion-header">
+    <span class="seccion-tag">Colecciones permanentes</span>
+    <div class="seccion-linea">
+      <h2 class="seccion-titulo">Qué ver en el museo</h2>
+    </div>
+    <p class="seccion-desc">Más de 60.000 piezas distribuidas en espacios temáticos que narran la historia extractiva e industrial del Principado de Asturias.</p>
+  </div>
+
+  <div class="expo-grid">
+    <div class="expo-item">
+      <div class="expo-num">01</div>
+      <h3 class="expo-titulo">Lámparas mineras</h3>
+      <p class="expo-desc">Una de las colecciones más completas de Europa. Desde las primeras lámparas de aceite hasta las modernas de batería.</p>
+      <a href="#" class="expo-enlace">Ver colección →</a>
+    </div>
+    <div class="expo-item">
+      <div class="expo-num">02</div>
+      <h3 class="expo-titulo">Maquinaria de extracción</h3>
+      <p class="expo-desc">Máquinas de vapor, compresores, locomotoras y todo el utillaje que hizo posible la minería industrial en las cuencas del Nalón y el Caudal.</p>
+      <a href="#" class="expo-enlace">Ver colección →</a>
+    </div>
+    <div class="expo-item">
+      <div class="expo-num">03</div>
+      <h3 class="expo-titulo">Minerales de Asturias</h3>
+      <p class="expo-desc">Hulla, antracita, hierro, cinc y plomo. La variedad mineralógica del subsuelo asturiano, explicada geológicamente.</p>
+      <a href="#" class="expo-enlace">Ver colección →</a>
+    </div>
+    <div class="expo-item">
+      <div class="expo-num">04</div>
+      <h3 class="expo-titulo">Sociología laboral</h3>
+      <p class="expo-desc">Casa-aseo, enfermería, casa del médico, economato. La vida social del minero asturiano en el siglo XX.</p>
+      <a href="#" class="expo-enlace">Ver colección →</a>
+    </div>
+    <div class="expo-item">
+      <div class="expo-num">05</div>
+      <h3 class="expo-titulo">Bibliografía y archivo</h3>
+      <p class="expo-desc">Fondos documentales únicos: planos de pozos, registros de producción, fotografías históricas y publicaciones sindicales.</p>
+      <a href="#" class="expo-enlace">Ver colección →</a>
+    </div>
+    <div class="expo-item">
+      <div class="expo-num">06</div>
+      <h3 class="expo-titulo">Arqueología industrial</h3>
+      <p class="expo-desc">El MUMI como hito del turismo industrial asturiano. Conexión con el Pozo Sotón, el MUSI y las rutas de los valles mineros.</p>
+      <a href="#" class="expo-enlace">Ver colección →</a>
+    </div>
+  </div>
+</section>
+
+<!-- MINA IMAGEN -->
+<section id="mina">
+  <div class="mina-inner">
+    <div class="mina-texto">
+      <span class="seccion-tag">La joya del museo</span>
+      <h2 class="seccion-titulo">La mina imagen</h2>
+      <p class="seccion-desc">La visita más impactante del MUMI. Un recorrido a escala real por el interior de una explotación minera, con utillaje original y una reproducción fiel del trabajo bajo tierra.</p>
+      <ul class="mina-features">
+        <li>Galería principal de 850 metros de longitud</li>
+        <li>Jaula de extracción vertical original en funcionamiento</li>
+        <li>Recreación de los distintos frentes de trabajo por épocas</li>
+        <li>Piezas originales de maquinaria in situ</li>
+        <li>Guías especializados con formación minera</li>
+        <li>Temperatura constante de 14 °C en el interior</li>
+      </ul>
+      <a href="#visita" class="btn-primario">Reservar entrada</a>
+    </div>
+
+    <!-- Ilustración SVG mina -->
+    <div class="mina-visual">
+      <svg viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%">
+        <!-- Exterior -->
+        <rect x="140" y="0" width="120" height="200" fill="#2c2520" stroke="#5c4830" stroke-width="1"/>
+        <!-- Torre castillete simplificada -->
+        <polygon points="200,10 140,100 260,100" fill="#3d3530" stroke="#c8960a" stroke-width="1.5"/>
+        <circle cx="200" cy="108" r="16" fill="#2c2520" stroke="#c8960a" stroke-width="2"/>
+        <circle cx="200" cy="108" r="7" fill="#c8960a"/>
+        <!-- Cable -->
+        <line x1="200" y1="108" x2="200" y2="200" stroke="#c8960a" stroke-width="2" stroke-dasharray="4,2"/>
+        <!-- Edificio principal -->
+        <rect x="130" y="180" width="140" height="80" fill="#3d3530" stroke="#5c4830" stroke-width="1"/>
+        <rect x="175" y="195" width="50" height="65" fill="#2c2520"/>
+        <!-- Pozo y jaula -->
+        <rect x="185" y="200" width="30" height="180" fill="#1a1612" stroke="#444" stroke-width="0.5"/>
+        <rect x="188" y="240" width="24" height="35" fill="#4a3a28" stroke="#c8960a" stroke-width="1"/>
+        <!-- Galerías subterráneas -->
+        <rect x="20" y="360" width="360" height="100" rx="4" fill="#1a1612" stroke="#333" stroke-width="0.5"/>
+        <!-- Galería 1 -->
+        <rect x="40" y="375" width="200" height="28" rx="3" fill="#2c2520" stroke="#444" stroke-width="0.5"/>
+        <circle cx="70" cy="389" r="4" fill="#c8960a" opacity="0.7"/>
+        <circle cx="110" cy="389" r="4" fill="#c8960a" opacity="0.5"/>
+        <circle cx="150" cy="389" r="4" fill="#c8960a" opacity="0.4"/>
+        <circle cx="190" cy="389" r="4" fill="#c8960a" opacity="0.3"/>
+        <!-- Galería 2 -->
+        <rect x="100" y="415" width="260" height="28" rx="3" fill="#2c2520" stroke="#444" stroke-width="0.5"/>
+        <circle cx="130" cy="429" r="4" fill="#c8960a" opacity="0.6"/>
+        <circle cx="175" cy="429" r="4" fill="#c8960a" opacity="0.5"/>
+        <circle cx="220" cy="429" r="4" fill="#c8960a" opacity="0.4"/>
+        <circle cx="310" cy="429" r="4" fill="#c8960a" opacity="0.3"/>
+        <!-- Etiquetas -->
+        <text x="200" y="295" text-anchor="middle" font-family="Arial" font-size="9" fill="#666" letter-spacing="2">POZO DE EXTRACCIÓN</text>
+        <text x="140" y="395" text-anchor="middle" font-family="Arial" font-size="8" fill="#888">GALERÍA PRINCIPAL — 850 m</text>
+        <text x="230" y="435" text-anchor="middle" font-family="Arial" font-size="8" fill="#888">GALERÍA SECUNDARIA</text>
+        <!-- Cota -->
+        <line x1="10" y1="260" x2="10" y2="450" stroke="#444" stroke-width="0.5"/>
+        <line x1="6" y1="260" x2="14" y2="260" stroke="#444" stroke-width="0.5"/>
+        <line x1="6" y1="450" x2="14" y2="450" stroke="#444" stroke-width="0.5"/>
+        <text x="4" y="358" text-anchor="middle" font-family="Arial" font-size="8" fill="#666" transform="rotate(-90, 4, 358)">~190 m</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- PLANIFICA TU VISITA -->
+<section id="visita">
+  <div class="seccion-header">
+    <span class="seccion-tag" style="color: var(--dorado);">Información práctica</span>
+    <div class="seccion-linea">
+      <h2 class="seccion-titulo" style="color: var(--crema);">Planifica tu visita</h2>
+    </div>
+  </div>
+
+  <div class="visita-grid">
+    <div class="visita-card">
+      <div class="visita-icono">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="4" y="6" width="24" height="22" rx="2" stroke="#c8960a" stroke-width="1.5"/>
+          <line x1="4" y1="12" x2="28" y2="12" stroke="#c8960a" stroke-width="1.5"/>
+          <line x1="10" y1="3" x2="10" y2="9" stroke="#c8960a" stroke-width="1.5"/>
+          <line x1="22" y1="3" x2="22" y2="9" stroke="#c8960a" stroke-width="1.5"/>
+          <rect x="9" y="16" width="4" height="4" rx="1" fill="#c8960a" opacity="0.6"/>
+          <rect x="14" y="16" width="4" height="4" rx="1" fill="#c8960a" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="visita-titulo">Horarios</div>
+      <div class="visita-valor">Martes a domingo<br>10:00 – 18:00 h<br><small style="color:#666;">Lunes cerrado</small></div>
+    </div>
+    <div class="visita-card">
+      <div class="visita-icono">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="14" r="8" stroke="#c8960a" stroke-width="1.5"/>
+          <path d="M8 28 Q16 20 24 28" stroke="#c8960a" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="14" r="3" fill="#c8960a" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="visita-titulo">Precios</div>
+      <div class="visita-valor">Adultos: 6 €<br>Reducida: 4 €<br>Menores de 7: gratuito</div>
+    </div>
+    <div class="visita-card">
+      <div class="visita-icono">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 4 C10 4 6 9 6 14 C6 21 16 28 16 28 C16 28 26 21 26 14 C26 9 22 4 16 4Z" stroke="#c8960a" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="14" r="3" fill="#c8960a" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="visita-titulo">Cómo llegar</div>
+      <div class="visita-valor">C/ El Trabanquín, s/n<br>33940 El Entrego<br>San Martín del Rey Aurelio</div>
+    </div>
+    <div class="visita-card">
+      <div class="visita-icono">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M6 8 Q6 6 8 6 L24 6 Q26 6 26 8 L26 20 Q26 22 24 22 L18 22 L13 27 L13 22 L8 22 Q6 22 6 20 Z" stroke="#c8960a" stroke-width="1.5" fill="none"/>
+          <line x1="11" y1="13" x2="21" y2="13" stroke="#c8960a" stroke-width="1.5"/>
+          <line x1="11" y1="17" x2="17" y2="17" stroke="#c8960a" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="visita-titulo">Reservas grupos</div>
+      <div class="visita-valor">985 66 31 33<br>reservas@mumi.es<br><small style="color:#666;">Mín. 15 personas</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO / FOOTER -->
+<footer id="contacto">
+  <div class="footer-inner">
+    <div class="footer-marca">
+      <span style="font-family: Arial Black, sans-serif; font-size: 20px; font-weight: 900; color: var(--dorado-claro); letter-spacing: 3px;">MUMI</span>
+      <p>Museo de la Minería y la Industria de Asturias. El museo más visitado del Principado, guardián de dos siglos de historia minera e industrial.</p>
+      <p style="margin-top:0.5rem;">Construido en 1994 sobre la escombrera de la Mina San Vicente.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-titulo">Visita</div>
+      <ul>
+        <li><a href="#">Mina imagen</a></li>
+        <li><a href="#">Exposiciones</a></li>
+        <li><a href="#">Actividades educativas</a></li>
+        <li><a href="#">Rutas industriales</a></li>
+        <li><a href="#">Tienda</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-titulo">Recursos</div>
+      <ul>
+        <li><a href="#">Vídeos IA</a></li>
+        <li><a href="#">Archivo fotográfico</a></li>
+        <li><a href="#">Publicaciones</a></li>
+        <li><a href="#">Prensa</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-titulo">Museo</div>
+      <ul>
+        <li><a href="#">Historia del MUMI</a></li>
+        <li><a href="#">Fundatec</a></li>
+        <li><a href="#">MUSI · Museo Siderurgia</a></li>
+        <li><a href="#">Pozo Sotón</a></li>
+        <li><a href="#">Accesibilidad</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 MUMI — Museo de la Minería y la Industria de Asturias</span>
+    <span style="color:#444;">Principado de Asturias · FUNDATEC</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="cerrarModal(event)">
+  <div class="modal-box">
+    <button class="modal-cerrar" onclick="document.getElementById('modal').classList.remove('activo')">✕</button>
+    <video id="modal-video" width="100%" controls>
+      
+      <source src="" type="video/mp4">
+    </video>
+    <h3 class="modal-vid-titulo" id="modal-titulo"></h3>
+    <p class="modal-vid-desc" id="modal-desc"></p>
+  </div>
+</div>
+
+
+<script>
+function abrirModal(titulo, desc, videoSrc) {
+  document.getElementById('modal-titulo').textContent = titulo;
+  document.getElementById('modal-desc').textContent = desc;
+
+  const video = document.getElementById('modal-video');
+  video.querySelector('source').src = videoSrc;
+  video.load();
+
+  document.getElementById('modal').classList.add('activo');
+}
+
+function cerrarModal(e) {
+  const modal = document.getElementById('modal');
+
+  if (e.target === modal) {
+    modal.classList.remove('activo');
+
+    const video = document.getElementById('modal-video');
+    video.pause();
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('modal').classList.remove('activo');
+
+    const video = document.getElementById('modal-video');
+    video.pause();
+  }
+});
+</script>
+</body>
+</html>
